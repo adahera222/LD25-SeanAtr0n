@@ -7,3 +7,12 @@
 /Library
 /obj
 /Temp
+*~
+
+/Assets/NGUI
+/Assets/SmoothMoves
+#GameDraw
+/Assets/Plugins/clipper_library.dll
+/Assets/Plugins/GameDraw*
+/Assets/Plugins/Poly2Tri.dll
+/Assets/Plugins/Editor/GameDrawEditor.dll
