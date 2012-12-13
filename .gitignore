@@ -16,3 +16,6 @@
 /Assets/Plugins/GameDraw*
 /Assets/Plugins/Poly2Tri.dll
 /Assets/Plugins/Editor/GameDrawEditor.dll
+
+#special promotion substances that are not free
+/Assets/substances_special_promotion
