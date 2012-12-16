@@ -6,9 +6,6 @@ using System.Collections.Generic;
 public class CameraVelocity : MonoBehaviour {
 	
 	float velocity;
-	Vector3 prevPos;
-	float prevVelocity;
-	float fovBase;
 	public float accel;
 	
 	public float rangeFactor = 10;
@@ -23,8 +20,6 @@ public class CameraVelocity : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		prevPos = transform.position;
-		fovBase = GetComponent<Camera>().fov;
 		avg = new Queue<float>();
 		for(int i = 0; i < smoothing; i++) avg.Enqueue(0f);
 	}

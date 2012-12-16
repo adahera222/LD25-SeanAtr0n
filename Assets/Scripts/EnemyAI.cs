@@ -3,9 +3,11 @@ using System.Collections;
 
 public class EnemyAI : MonoBehaviour {
 	
-	public static bool seeking = true; //TODO deactivate
+	public bool seeking = false;
 	
 	public float speed = 4f;
+	
+	public float pursuitForce = 3000;
 	
 	// Use this for initialization
 	void Start () {
@@ -18,9 +20,18 @@ public class EnemyAI : MonoBehaviour {
 	}
 	
 	void FixedUpdate() {
-		transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform.position);
+		
+		if(seeking) {
+			transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform.position);
 		//transform.Translate(transform.forward * speed);
 		
+		}
+		
+	}
+	
+	public void Init() {
+		GetComponent<ConstantForce>().relativeForce = new Vector3(0f,0f, pursuitForce);
+		seeking = true;
 	}
 	
 }

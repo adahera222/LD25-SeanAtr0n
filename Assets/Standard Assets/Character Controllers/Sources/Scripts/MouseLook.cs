@@ -74,14 +74,8 @@ public class MouseLook : MonoBehaviour {
 		if (rigidbody)
 			rigidbody.freezeRotation = true;		
 	}
-	
-	void Awake() {
-		ExitMenu();
-	}
-	
-	public void ExitMenu() {
-		Screen.lockCursor = true;
-	}
+
+
 	
 	public void MSensChange(float val) {
 		sensitivityX = sensXmax * val;
