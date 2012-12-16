@@ -45,7 +45,7 @@ class CharacterMotorMovement {
 
 	// We will keep track of the character's current velocity,
 	@System.NonSerialized
-	var velocity : Vector3;
+	public var velocity : Vector3;
 	
 	// This keeps track of our current velocity while we're not grounded
 	@System.NonSerialized
