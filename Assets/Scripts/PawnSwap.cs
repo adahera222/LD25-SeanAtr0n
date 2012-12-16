@@ -13,7 +13,7 @@ public class PawnSwap : MonoBehaviour {
 	}
 	void Awake() {
 		active = this;
-		ExitMenu();
+//		ExitMenu();
 	}
 	
 	// Update is called once per frame
@@ -22,6 +22,7 @@ public class PawnSwap : MonoBehaviour {
 	}
 	
 	public void FootPawn() {
+		if(footballPawn.activeSelf) return;
 		footballPawn.transform.position = gliderPawn.transform.position;
 		footballPawn.transform.rotation = gliderPawn.transform.rotation;
 //		for( int i = gliderPawn.transform.childCount-1; i >= 0 ; i--) {
@@ -34,8 +35,5 @@ public class PawnSwap : MonoBehaviour {
 		gliderPawn.SetActive(false);
 
 	}
-	
-	public void ExitMenu() {
-		Screen.lockCursor = true;
-	}
+
 }

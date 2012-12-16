@@ -9,6 +9,8 @@ public class StaminaMeter : MonoBehaviour {
 	
 	public RigidController player;
 	
+	public static bool display = false;
+	
 	// Use this for initialization
 	void Start () {
 	

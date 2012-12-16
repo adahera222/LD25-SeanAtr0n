@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 public class RigidController : MonoBehaviour {
+		
+	public static new RigidController active;
 	
 	public float speed;
 	public float jumpForce;
@@ -26,6 +28,12 @@ public class RigidController : MonoBehaviour {
 	public float stamina = 400;
 	public float breath = 400;
 	
+	float lastStrafe = 0f;
+	float lastStrafeSign = 0f;
+	float doubleTapSpeed = 0.5f;
+	
+	bool strafing = false;
+	
 	// Use this for initialization
 	void Start () {
 	
@@ -36,34 +44,69 @@ public class RigidController : MonoBehaviour {
 	
 	}
 	
+	void Awake() {
+		//GetComponent<StaminaMeter>().Init();
+		active = this;
+		
+	}
+	
 	void FixedUpdate() {
-		float forward = Input.GetAxis("Vertical") * speed;
+		if(rigidbody.velocity.y == 0f) grounded = true; //meh 
+		
+		float forward = Input.GetAxis("Vertical");
 		float sideways = Input.GetAxisRaw("Horizontal");
 		
+//		if(Input.GetKeyDown("Right")) {
+//			if((Time.time - lastStrafe) > doubleTapSpeed) {
+//				Debug.Log("strafe");
+//			}
+//		}
+		
+		if(sideways != 0f) {
+			if(!strafing) {
+				if( lastStrafeSign == Mathf.Sign(sideways)  &&  (Time.time - lastStrafe) < doubleTapSpeed) {
+					if(breath > 200) {
+						rigidbody.AddForce((transform.right *  Mathf.Sign(sideways) + transform.up * stepForce) * dodgeForce, ForceMode.Impulse);
+//						dodgeCounter = 0f;
+						breath -= 200;
+						stamina -= 1;
+					} else {
+						//play failure sound
+					}
+				}
+				strafing = true;
+				lastStrafe = Time.time;
+				lastStrafeSign = Mathf.Sign(sideways);
+			}
+		} else {
+			strafing = false;
+		}
+		
+		
 		counter += Time.deltaTime;
-		if(counter > impulseFreq) {
-			rigidbody.AddForce((transform.forward + myUp * stepForce) * forward , ForceMode.Impulse);
+		if(counter > impulseFreq && (sideways != 0f || forward != 0f)) {
+			rigidbody.AddForce((transform.forward * forward + transform.right * sideways + myUp * stepForce) * speed , ForceMode.Impulse);
 			
 			
 			counter = 0f;
 		}
 		
-		dodgeCounter += Time.deltaTime;
+//		dodgeCounter += Time.deltaTime;
 		
 		if (breath < stamina)
 			breath += 1;
 		
-		if(sideways != 0f && dodgeCounter > dodgeFreq) {
-			rigidbody.AddForce((transform.right *  Mathf.Sign(sideways) + myUp * stepForce) * dodgeForce, ForceMode.Impulse);
-			dodgeCounter = 0f;
-			breath -= 200;
-			stamina -= 1;
-		}
+//		if(sideways != 0f && dodgeCounter > dodgeFreq) {
+//			rigidbody.AddForce((transform.right *  Mathf.Sign(sideways) + myUp * stepForce) * dodgeForce, ForceMode.Impulse);
+//			dodgeCounter = 0f;
+//			breath -= 200;
+//			stamina -= 1;
+//		}
 		
 		
 		
-		if(Input.GetButtonDown("Jump")) {
-			rigidbody.AddForce(myUp * jumpForce, ForceMode.Impulse);
+		if(Input.GetButtonDown("Jump") && grounded) {
+			rigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
 		}
 		
 		

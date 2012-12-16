@@ -13,6 +13,7 @@ public class CameraVelocity : MonoBehaviour {
 	
 	private Vignetting vig;
 	private CharacterMotor motor;
+	private GameObject motorParent;
 	
 	private Queue<float> avg;
 	private float accum = 0f;
@@ -26,6 +27,7 @@ public class CameraVelocity : MonoBehaviour {
 	
 	void Awake() {
 		vig = GetComponent<Vignetting>();
+		motorParent = transform.parent.gameObject;
 		motor = transform.parent.GetComponent<CharacterMotor>();
 
 	}
@@ -38,10 +40,14 @@ public class CameraVelocity : MonoBehaviour {
 		
 		//accel = (velocity - prevVelocity)/Time.deltaTime;
 		
-		measure.text = accum.ToString("F2");
+		if(measure != null)
+			measure.text = accum.ToString("F2");
 		
-		velocity = motor.movement.velocity.magnitude;
-		
+//		if(motorParent.activeSelf) {
+//			velocity = motor.movement.velocity.magnitude;
+//		} else {
+			velocity = transform.parent.gameObject.rigidbody.velocity.magnitude;
+//		}
 		accum += velocity;
 		avg.Enqueue(velocity);
 		accum -= avg.Dequeue();
