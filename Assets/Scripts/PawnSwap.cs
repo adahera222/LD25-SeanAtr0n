@@ -14,6 +14,8 @@ public class PawnSwap : MonoBehaviour {
 	void Awake() {
 		active = this;
 //		ExitMenu();
+		RigidController.active.GetComponent<StaminaMeter>().Init();
+
 	}
 	
 	// Update is called once per frame

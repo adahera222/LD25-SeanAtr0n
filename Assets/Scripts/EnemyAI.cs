@@ -9,9 +9,11 @@ public class EnemyAI : MonoBehaviour {
 	
 	public float pursuitForce = 3000;
 	
-	// Use this for initialization
-	void Start () {
+	public Vector3 initialPos;
 	
+	// Use this for initialization
+	void Awake () {
+		initialPos = transform.position;
 	}
 	
 	// Update is called once per frame
